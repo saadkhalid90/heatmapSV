@@ -3,9 +3,9 @@
   let distScale, categScale, colScale, radScale, categLabelScale, divColScale
 
   let Divisions = ["Bahawalpur", "DG Khan", "Faisalabad", "Gujranwala", "Lahore", "Multan", "Rawalpindi","Sahiwal","Sargodha"];
-  let bubCategs = ["Physical Violence - Last 12 months","Physical Violence - Ever"];
+  let bubCategs = ["Sexual Violence - Last 12 months","Sexual Violence - Ever"];
   async function readAndDraw(){
-    let data = await d3.csv('attitudesVAW.csv')
+    let data = await d3.csv('attitudesVAWSV.csv')
     console.log(data);
     console.log(wide_to_long(data));
 
@@ -18,7 +18,7 @@
 
     let districts = arrOfArr.map(d => d.key);
     let categories = arrOfArr[0].values.map(d => d.Category);
-    let everViol = data.map(d => d["Physical Violence - Ever"]);
+    let everViol = data.map(d => d["Sexual Violence - Ever"]);
 
     console.log(districts);
     console.log(categories);
@@ -47,9 +47,9 @@
 
     radScale = d3.scaleSqrt()
                 .domain([0, d3.max(everViol)])
-                .range([0, 20]);
+                .range([0, 10]);
 
-    colScale = d3.scaleLinear().domain([0, 100]).range(['#F5F5F5', '#880E4F'])
+    colScale = d3.scaleLinear().domain([0, 100]).range(['#F5F5F5', '#4A148C'])
 
     let xInterval = width/ categScale.domain().length;
     categScale.range(d3.range(0, width + 1, xInterval));
@@ -70,7 +70,7 @@
       .attr('id', 'chartTitle')
       .attr('transform', `translate(${svg_width/2}, 30)`)
       .append('text')
-      .text("Attitudes of ever married women towards physical violence by spouse")
+      .text("Attitudes of ever married women towards sexual violence by spouse")
       .style('text-anchor', 'middle')
 
     let rows = svg_g.selectAll('.row')
@@ -228,7 +228,7 @@
 
       linGrad.append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#880E4F")
+        .attr("stop-color", "#4A148C")
         .attr("stop-opacity", 1);
 
       barG.append('rect')
